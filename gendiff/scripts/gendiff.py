@@ -1,5 +1,6 @@
 import argparse
-import json
+
+from gendiff.gendiff import generate_diff
 
 
 def init_cli_parser() -> argparse.ArgumentParser:
@@ -13,39 +14,11 @@ def init_cli_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def generate_diff(path1, path2):
-    # read data
-    json1 = json.load(open(path1))
-    json2 = json.load(open(path2))
-
-    # get unique keys and sort it
-    keys = list(set(json1.keys()) | set(json2.keys()))
-    keys.sort()
-
-    # compare and create response
-    response = []
-    for key in keys:
-        if key in json1.keys() and key not in json2.keys():
-            response.append(f"- {key}: {json1[key]}")
-        elif key in json2.keys() and key not in json1.keys():
-            response.append(f"+ {key}: {json2[key]}")
-        elif json1[key] != json2[key]:
-            response.append(f"- {key}: {json1[key]}")
-            response.append(f"+ {key}: {json2[key]}")
-        else:
-            response.append(f"  {key}: {json1[key]}")
-
-    # print response formated
-    print("{")
-    for text in response:
-        print("  " + text)
-    print("}")
-
-
 def main():
     parser = init_cli_parser()
     args = parser.parse_args()
-    generate_diff(args.first_file, args.second_file)
+    diff = generate_diff(args.first_file, args.second_file)
+    print(diff)
 
 
 if __name__ == '__main__':
