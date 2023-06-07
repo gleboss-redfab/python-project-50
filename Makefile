@@ -15,8 +15,7 @@ lint:
 selfcheck:
 	poetry check
 
-# check: selfcheck test lint
-check: selfcheck lint
+check: selfcheck test lint
 
 build: check
 	poetry build
@@ -30,4 +29,7 @@ package-install:
 .PHONY: install test lint selfcheck check build
 
 run_json:
-	gendiff data/file1.json data/file2.json
+	poetry run gendiff data/file1.json data/file2.json
+
+run_yaml:
+	poetry run gendiff data/file1.yaml data/file2.yaml
