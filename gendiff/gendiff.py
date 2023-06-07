@@ -1,13 +1,15 @@
 import json
 
+# import yaml
+
+# yaml.load(open("data/file1.yaml"), Loader=yaml.BaseLoader)
+
 
 def generate_diff(path1: str, path2: str) -> str:
     """Campare 2 json files and return formated diff
-
     Args:
         path1 (str): path to 1st JSON
         path2 (str): path to 1st JSON
-
     Returns:
         str: formated diff
     """
